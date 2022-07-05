@@ -1,0 +1,41 @@
+﻿@model EmployeesTest.ViewModels.EditEmployeeViewModel
+
+@{
+    ViewBag.Title = "Редактирование работника";
+}
+
+<div class="container custom text-custom" style="margin-top: 10%">
+    <form asp-action="EditEmployee" asp-controller="Home" asp-antiforgery="true">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group text-center" style="margin-bottom: 25px">
+            <h2>Изменить: <a style="color: #0066cc;">@Model.Employee.Name</a></h2>
+        </div>
+        <div class="form-group">
+            <input type="hidden" asp-for="@Model.Employee.Id" />
+        </div>
+        <div class="form-group" style="margin-bottom: 25px">
+            <label asp-for="@Model.Employee.Departament" class="control-label">Отдел</label>
+            <input type="text" asp-for="@Model.Employee.Departament" class="form-control" />
+        </div>
+        <div class="form-group" style="margin-bottom: 25px">
+            <label asp-for="@Model.Employee.Name" class="control-label">ФИО</label>
+            <input type="text" asp-for="@Model.Employee.Name" class="form-control" />
+        </div>
+        <div class="form-group" style="margin-bottom: 25px">
+            <label asp-for="@Model.Employee.Birtgday" class="control-label">День рождение</label>
+            <input type="date" asp-for="@Model.Employee.Birtgday" class="form-control" />
+        </div>
+        <div class="form-group" style="margin-bottom: 25px">
+            <label asp-for="@Model.Employee.ApplyDate" class="control-label">Дата устройства на работу</label>
+            <input type="date" asp-for="@Model.Employee.ApplyDate" class="form-control" />
+        </div>
+        <div class="form-group" style="margin-bottom: 25px">
+            <label asp-for="@Model.Employee.Salary" class="control-label">Заработная плата</label>
+            <input type="number" asp-for="@Model.Employee.Salary" class="form-control" />
+        </div>
+        <div class="form-group text-center">
+            <input type="submit" value="Сохранить" class="btn btn-primary btn-custom" />
+            <a class="btn btn-outline-secondary btn-custom" asp-action="GetAllEmployees" asp-controller="Home">Назад</a>
+        </div>
+    </form>
+</div>

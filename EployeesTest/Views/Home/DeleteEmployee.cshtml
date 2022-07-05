@@ -1,0 +1,31 @@
+﻿@model EmployeesTest.ViewModels.DeleteEmployeeViewModel
+
+@{
+    ViewBag.Title = "Удалить работника";
+}
+
+<div class="container text-custom justify-content-center" style="margin-top: 10%">
+    @if (Model != null)
+    {
+        <form asp-action="DeleteEmployee" asp-controller="Home"  asp-antiforgery="true" asp-route-id="@Model.Employee.Id">
+            <div class="form-group text-center" style="margin-bottom: 25px">
+                <h2>Удалить: <a style="color: red;">@Model.Employee.Name</a></h2>
+            </div>
+            <div class=" form-group text-center">
+                <input type="hidden" asp-for="@Model.Employee.Id" />
+                <input type="hidden" asp-for="@Model.Employee.Name" />
+                <input type="submit" class="btn btn-danger btn-custom" value="Удалить" />
+                <a class="btn btn-outline-secondary btn-custom" asp-action="GetAllEmployees" asp-controller="Home">Назад</a>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="form-group text-center" style="margin-bottom: 25px">
+            <h2>Работник не существует</h2>
+        </div>
+        <div class="form-group text-center">
+            <a class="btn btn-lg btn-primary" asp-action="GetAllEmployees" asp-controller="Home">Назад</a>
+        </div>
+    }
+</div>

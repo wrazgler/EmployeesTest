@@ -1,0 +1,143 @@
+﻿@model EmployeesTest.ViewModels.AllEmployeesViewModel
+
+@{
+    ViewData["Title"] = "Список работников";
+}
+<div class="container" style="margin-top: 10%">
+    <table class="table text-custom">
+        <tr>
+            <form method="get">
+                <td class="text-center">
+                    <div class="form-group">
+                        <input type="text" asp-for="@Model.FilterViewModel.SelectedDepartment" class="form-control form-control-sm border-dark" />
+                    </div>
+                </td>
+                <td class="text-center">
+                    <div class="form-group">
+                        <input type="text" asp-for="@Model.FilterViewModel.SelectedName" class="form-control form-control-sm border-dark" />
+                    </div>
+                </td>
+                <td class="text-center">
+                    <div class="form-group">
+                        <input type="date" asp-for="@Model.FilterViewModel.SelectedBirthday" class="form-control form-control-sm border-dark" />
+                    </div>
+                </td>
+                <td class="text-center">
+                    <div class="form-group">
+                        <input type="date" asp-for="@Model.FilterViewModel.SelectedApplyDate" class="form-control form-control-sm border-dark" />
+                    </div>
+                </td>
+                <td class="text-center">
+                    <div class="form-group">
+                        <input type="text" asp-for="@Model.FilterViewModel.SelectedSalary" class="form-control form-control-sm border-dark" />
+                    </div>
+                </td>
+                <td></td>
+                <td class="text-center">
+                    <div>
+                        <input type="submit" value="Фильтр" class="btn btn-sm btn-outline-dark btn-custom-2"/>
+                    </div>
+                </td>
+                <td></td>
+            </form>
+        </tr>
+
+        <tr>
+            <th  class="text-center">
+                <a asp-action="GetAllEmployees"
+                   asp-route-filterViewModel="@(Model.FilterViewModel)"
+                   asp-route-sortOrder="@(Model.SortViewModel.DepartamentSort)">Отдел</a>
+            </th>
+            <th  class="text-center">
+                <a asp-action="GetAllEmployees"
+                   asp-route-filterViewModel="@(Model.FilterViewModel)"
+                   asp-route-sortOrder="@(Model.SortViewModel.NameSort)">Работник</a>
+            </th>
+            <th  class="text-center">
+                <a asp-action="GetAllEmployees"
+                   asp-route-filterViewModel="@(Model.FilterViewModel)"
+                   asp-route-sortOrder="@(Model.SortViewModel.BirthdaytSort)">Дата рождения</a>
+            </th>
+            <th  class="text-center">
+                <a asp-action="GetAllEmployees"
+                   asp-route-filterViewModel="@(Model.FilterViewModel)"
+                   asp-route-sortOrder="@(Model.SortViewModel.ApplyDateSort)">Дата устройства на работу</a>
+            </th>
+            <th  class="text-center">
+                <a asp-action="GetAllEmployees"
+                   asp-route-filterViewModel="@(Model.FilterViewModel)"
+                   asp-route-sortOrder="@(Model.SortViewModel.SalarySort)">Заработная плата</a>
+            </th>
+            <th class="text-center"><a class="btn btn-sm btn-primary btn-custom-2" data-toggle="modal" data-target="#addButtom">Создать</a></th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (var employee in Model.Employees)
+        {
+            <tr>
+                <td class="text-center"><a>@employee.Departament</a></td>
+                <td class="text-center"><a>@employee.Name</a></td>
+                <td class="text-center"><a>@employee.Birtgday.ToString("d")</a></td>
+                <td class="text-center"><a >@employee.ApplyDate.ToString("d")</a></td>
+                <td class="text-center"><a>@employee.Salary</a></td>
+                <td class="text-center"><a class="btn btn-sm btn-primary btn-custom-2" data-toggle="modal" data-target="#addButtom">Создать</a></td>
+                <td class="text-center"><a class="btn btn-sm btn-primary btn-custom-2" asp-action="EditEmployee" asp-controller="Home" asp-route-id="@employee.Id">Изменить</a></td>
+                <td class="text-center"><a class="btn btn-sm btn-danger  btn-custom-2" asp-action="DeleteEmployee" asp-controller="Home" asp-route-id="@employee.Id">Удалить</a></td>
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+    </table>
+
+    <!-- Modal-->
+        <div class="modal fade" id="addButtom" tabindex="-1" aria-labelledby="addButtomLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addButtomLabel">Добавить работника</h5>
+                        <button class="btn-close" data-dismiss="modal" aria-label="close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-action="AddEmployee" asp-controller="Home" asp-antiforgery="true">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-group" style="margin-bottom: 25px">
+                                <label asp-for="@Model.Departament" class="control-label">Отдел</label>
+                                <input type="text" asp-for="@Model.Departament" class="form-control" />
+                            </div>
+                            <div class="form-group" style="margin-bottom: 25px">
+                                <label asp-for="@Model.Name" class="control-label">ФИО</label>
+                                <input type="text" asp-for="@Model.Name" class="form-control" />
+                            </div>
+                            <div class="form-group" style="margin-bottom: 25px">
+                                <label asp-for="@Model.Birtgday" class="control-label">День рождение</label>
+                                <input type="date" asp-for="@Model.Birtgday" class="form-control" />
+                            </div>
+                            <div class="form-group" style="margin-bottom: 25px">
+                                <label asp-for="@Model.ApplyDate" class="control-label">Дата устройства на работу</label>
+                                <input type="date" asp-for="@Model.ApplyDate" class="form-control" />
+                            </div>
+                            <div class="form-group" style="margin-bottom: 25px">
+                                <label asp-for="@Model.Salary" class="control-label">Заработная плата</label>
+                                <input type="number" asp-for="@Model.Salary" class="form-control" />
+                            </div>
+                            <div class="form-group text-center">
+                                <input type="submit" value="Сохранить" class="btn btn-primary btn-custom" />
+                                <a class="btn btn-outline-secondary btn-custom" asp-action="GetAllEmployees" asp-controller="Home">Назад</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Modal-->
+</div>
